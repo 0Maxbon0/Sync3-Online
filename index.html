@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sync 3 - نظام إدارة العيادات الذكي</title>
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
@@ -38,7 +37,7 @@
             --shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
         }
 
-        * { box-sizing: border-box; transition: all 0.3s ease; }
+        * { box-sizing: border-box; transition: background-color 0.3s, color 0.3s, border-color 0.3s; }
 
         body {
             background-color: var(--bg-body);
@@ -51,6 +50,7 @@
             gap: 40px;
             min-height: 100vh;
             color: var(--text-primary);
+            overflow-x: hidden;
         }
 
         /* --- CONTROLS --- */
@@ -80,11 +80,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.2s ease;
         }
 
         .btn-control:hover, .btn-control.active {
             background: var(--accent);
             color: #fff;
+            transform: scale(1.1);
         }
 
         /* --- SLIDE CONTAINER --- */
@@ -92,7 +94,7 @@
             background: var(--bg-card);
             width: 100%;
             max-width: 1300px;
-            height: 720px; /* Fixed height for PC aesthetics */
+            height: 720px;
             border-radius: 24px;
             border: 1px solid var(--border);
             padding: 50px;
@@ -102,27 +104,12 @@
             flex-direction: column;
             justify-content: center;
             box-shadow: var(--shadow);
+            transition: all 0.5s ease;
         }
 
-        /* --- BADGES (Notes) --- */
-        .badge-container {
-            width: 100%;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: flex-start;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
+        /* --- BADGES --- */
+        .badge-container { width: 100%; margin-bottom: 20px; display: flex; justify-content: flex-start; }
+        .badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 12px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; }
         .badge-basic { background: rgba(56, 189, 248, 0.1); color: var(--color-basic); border: 1px solid rgba(56, 189, 248, 0.3); }
         .badge-pro { background: rgba(245, 158, 11, 0.1); color: var(--color-pro); border: 1px solid rgba(245, 158, 11, 0.3); }
         .badge-ultimate { background: rgba(168, 85, 247, 0.1); color: var(--color-ulti); border: 1px solid rgba(168, 85, 247, 0.3); }
@@ -135,322 +122,170 @@
         li { font-size: 18px; margin-bottom: 12px; color: var(--text-primary); display: flex; align-items: center; gap: 10px; }
 
         /* --- LAYOUTS --- */
-        .two-col {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 40px;
-            height: 100%;
-            align-items: center;
-        }
-
-        .img-frame {
-            background: #000;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            overflow: hidden;
-            height: 100%;
-            max-height: 500px;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-
-        .browser-bar {
-            height: 30px;
-            background: #0f172a;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 0 15px;
-            border-bottom: 1px solid var(--border);
-        }
+        .two-col { display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; height: 100%; align-items: center; }
+        
+        .img-frame { background: #000; border-radius: 16px; border: 1px solid var(--border); overflow: hidden; height: 100%; max-height: 500px; display: flex; flex-direction: column; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .browser-bar { height: 30px; background: #0f172a; display: flex; align-items: center; gap: 6px; padding: 0 15px; border-bottom: 1px solid var(--border); }
         .dot { width: 10px; height: 10px; border-radius: 50%; }
         .red { background: #ef4444; } .yellow { background: #f59e0b; } .green { background: #22c55e; }
+        .img-content { flex: 1; background: #fff; display: flex; align-items: center; justify-content: center; position: relative; padding: 5px; }
+        .img-content img { width: 100%; height: 100%; object-fit: contain; }
 
-        .img-content {
-            flex: 1;
-            background: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: 5px;
-        }
-
-        .img-content img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        /* --- JOURNEY GRID --- */
-        .journey-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            height: 450px;
-        }
-
-        .j-card {
-            position: relative;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-            cursor: pointer;
-            group: card;
-        }
-
-        .j-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            background: #000;
-            transition: transform 0.5s;
-        }
-
+        .journey-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; height: 450px; }
+        .j-card { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; group: card; }
+        .j-card img { width: 100%; height: 100%; object-fit: contain; background: #000; transition: transform 0.5s; }
         .j-card:hover img { transform: scale(1.05); }
+        .j-caption { position: absolute; bottom: 0; width: 100%; background: rgba(15, 23, 42, 0.9); padding: 15px; border-top: 2px solid var(--accent); display: flex; justify-content: space-between; align-items: center; }
+        .j-caption h4 { color: var(--accent); margin: 0; font-size: 18px; }
 
-        .j-caption {
-            position: absolute;
-            bottom: 0; width: 100%;
-            background: rgba(15, 23, 42, 0.9);
-            padding: 15px;
-            border-top: 2px solid var(--accent);
+        /* --- STACKED PRICING GRID (ALWAYS STACKED) --- */
+        .pricing-grid { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 20px; 
+            height: 100%; 
+            overflow-y: auto; 
+            padding: 10px;
+        }
+
+        .p-card { 
+            background: var(--bg-card); 
+            border: 2px solid var(--border); 
+            border-radius: 20px; 
+            padding: 20px; 
+            text-align: center; 
+            cursor: pointer; 
+            transition: transform 0.3s; 
+            width: 100%;
+            display: flex; 
+            flex-direction: row; 
+            align-items: center;
+            justify-content: space-between;
+            min-height: 120px;
+        }
+
+        .p-card:hover { transform: translateX(-10px); }
+        .p-card.basic:hover { border-color: var(--color-basic); } 
+        .p-card.pro:hover { border-color: var(--color-pro); } 
+        .p-card.ulti:hover { border-color: var(--color-ulti); }
+        
+        .p-card .icon-box { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; flex-shrink: 0; }
+        .p-card.basic .icon-box { color: var(--color-basic); background: rgba(56, 189, 248, 0.1); }
+        .p-card.pro .icon-box { color: var(--color-pro); background: rgba(245, 158, 11, 0.1); }
+        .p-card.ulti .icon-box { color: var(--color-ulti); background: rgba(168, 85, 247, 0.1); }
+        
+        .p-content { text-align: right; flex-grow: 1; padding: 0 20px; }
+        .p-card h3 { font-size: 28px; margin: 0 0 5px 0; color: var(--text-primary); }
+        .p-card p { font-size: 16px; color: var(--text-secondary); margin: 0; }
+        .click-hint { font-size: 24px; color: var(--text-secondary); opacity: 0.5; }
+
+        /* --- SMART LIST --- */
+        .smart-list-container {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            border-radius: 16px;
+            padding: 5px;
+            display: flex;
+            flex-direction: column; /* Force Stack */
+            gap: 12px;
+        }
+
+        .mp-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 15px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: transform 0.2s, border-color 0.2s;
         }
 
-        .j-caption h4 { color: var(--accent); margin: 0; font-size: 18px; }
+        .mp-item:hover { transform: translateX(-5px); border-color: var(--accent); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 
-        /* --- INTERACTIVE PRICING CARDS --- */
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 30px;
-            height: 100%;
-            align-items: center;
-        }
+        .mp-feat { font-weight: bold; font-size: 18px; color: var(--text-primary); text-align: right; flex: 1; }
+        .mp-val-container { display: flex; align-items: center; margin-right: 15px; }
 
-        .p-card {
-            background: var(--bg-card);
-            border: 2px solid var(--border);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-            height: 450px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
+        .mp-badge { padding: 6px 16px; border-radius: 50px; font-size: 14px; font-weight: bold; white-space: nowrap; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .mp-badge.basic { background: rgba(56, 189, 248, 0.15); color: var(--color-basic); border: 1px solid rgba(56, 189, 248, 0.5); }
+        .mp-badge.pro { background: rgba(245, 158, 11, 0.15); color: var(--color-pro); border: 1px solid rgba(245, 158, 11, 0.5); }
+        .mp-badge.ulti { background: rgba(168, 85, 247, 0.15); color: var(--color-ulti); border: 1px solid rgba(168, 85, 247, 0.5); }
+        .mp-text-val { font-family: sans-serif; font-weight: bold; color: var(--accent); letter-spacing: 1px; font-size: 18px; direction: ltr; }
 
-        .p-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-
-        /* Basic Hover */
-        .p-card.basic:hover { border-color: var(--color-basic); box-shadow: 0 0 30px rgba(56, 189, 248, 0.2); }
-        .p-card.basic .icon-box { color: var(--color-basic); background: rgba(56, 189, 248, 0.1); }
-        
-        /* Pro Hover */
-        .p-card.pro:hover { border-color: var(--color-pro); box-shadow: 0 0 30px rgba(245, 158, 11, 0.2); }
-        .p-card.pro .icon-box { color: var(--color-pro); background: rgba(245, 158, 11, 0.1); }
-
-        /* Ultimate Hover */
-        .p-card.ulti:hover { border-color: var(--color-ulti); box-shadow: 0 0 30px rgba(168, 85, 247, 0.2); }
-        .p-card.ulti .icon-box { color: var(--color-ulti); background: rgba(168, 85, 247, 0.1); }
-
-        .p-card .icon-box {
-            width: 100px; height: 100px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 40px;
-            margin-bottom: 25px;
-            transition: transform 0.3s;
-        }
-
-        .p-card:hover .icon-box { transform: scale(1.1) rotate(5deg); }
-
-        .p-card h3 { font-size: 32px; margin-bottom: 15px; color: var(--text-primary); }
-        .p-card p { font-size: 18px; color: var(--text-secondary); margin-bottom: 30px; }
-        
-        .click-hint {
-            margin-top: auto;
-            font-size: 16px;
-            color: var(--text-secondary);
-            opacity: 0.7;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* --- MOBILE SIMULATION MODE --- */
-        body.mobile-view {
-            background-color: #111;
-            justify-content: flex-start;
-        }
-
-        body.mobile-view .slide-container {
-            width: 375px !important;
-            height: 812px !important;
-            min-height: 812px;
-            border-radius: 40px;
-            border: 8px solid #333;
-            padding: 30px 20px;
-            overflow-y: auto;
-            display: block;
-        }
-
-        body.mobile-view .slide-container::-webkit-scrollbar { width: 0; }
-
-        body.mobile-view .two-col,
-        body.mobile-view .journey-grid,
-        body.mobile-view .pricing-grid {
-            display: flex !important;
-            flex-direction: column !important;
-            height: auto !important;
-            gap: 30px !important;
-        }
-
-        body.mobile-view h1 { font-size: 36px; text-align: center; }
-        body.mobile-view h2 { font-size: 28px; text-align: center; display: block; border: none; margin-bottom: 30px; }
-        body.mobile-view p { font-size: 16px; text-align: center; }
-        
-        body.mobile-view .img-frame { height: 250px !important; max-height: none; }
-        body.mobile-view .j-card { height: 200px !important; }
-        body.mobile-view .p-card { height: auto !important; padding: 20px; width: 100%; }
-
-        /* --- ERROR MSG --- */
-        .error-box {
-            position: absolute; inset: 0; background: var(--bg-card);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: #ef4444; border: 2px dashed #ef4444; padding: 20px; text-align: center;
-        }
-
-        /* --- MODAL --- */
-        .modal {
-            display: none; position: fixed; inset: 0; z-index: 10000;
-            background: rgba(0,0,0,0.95); backdrop-filter: blur(8px);
-            align-items: center; justify-content: center;
-        }
-        .modal.active { display: flex; animation: fadeIn 0.3s; }
-        
-        .modal-box {
-            background: var(--bg-card); width: 90%; max-width: 1100px; height: 85%;
-            border-radius: 24px; border: 1px solid var(--accent);
-            display: flex; overflow: hidden; position: relative;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
-        }
-
-        /* Modal Colors based on Plan */
-        .modal-box.basic-theme { border-color: var(--color-basic); }
-        .modal-box.basic-theme h3, .modal-box.basic-theme li::before { color: var(--color-basic); }
-        
-        .modal-box.pro-theme { border-color: var(--color-pro); }
-        .modal-box.pro-theme h3, .modal-box.pro-theme li::before { color: var(--color-pro); }
-        
-        .modal-box.ulti-theme { border-color: var(--color-ulti); }
-        .modal-box.ulti-theme h3, .modal-box.ulti-theme li::before { color: var(--color-ulti); }
-
-        .modal-img { flex: 1.5; background: #000; display: flex; align-items: center; justify-content: center; }
-        .modal-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .modal-txt { flex: 1; padding: 50px; overflow-y: auto; }
-        
-        .close-modal { 
-            position: absolute; top: 20px; left: 20px; font-size: 24px; cursor: pointer; color: #fff; 
-            z-index: 10; background: rgba(255,255,255,0.1); width: 40px; height: 40px; 
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            transition: background 0.3s;
-        }
-        .close-modal:hover { background: #ef4444; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-
-        /* Mobile Modal */
-        body.mobile-view .modal-box { flex-direction: column; height: 95%; width: 95%; }
-        body.mobile-view .modal-img { flex: 1; min-height: 250px; }
-        body.mobile-view .modal-txt { flex: 1.5; padding: 25px; }
-
-        /* --- TABLE STYLES --- */
-        .pricing-table-container {
-            width: 100%;
-            height: 100%;
-            overflow-y: auto; /* Enable scrolling for long tables */
-            border-radius: 12px;
-            border: 1px solid var(--border);
-        }
-
-        table { width: 100%; border-collapse: collapse; background: var(--bg-surface); min-width: 700px; }
-        
-        thead { position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
-        
-        th, td { padding: 15px; text-align: center; border-bottom: 1px solid var(--border); font-size: 18px; }
-        
-        th { background: var(--bg-body); color: var(--text-primary); border-bottom: 2px solid var(--accent); }
-        th:first-child { text-align: right; width: 40%; background: var(--bg-body); }
-        
-        td:first-child { text-align: right; font-weight: bold; color: var(--text-primary); background: rgba(255,255,255,0.02); }
-        
-        .t-check { color: #22c55e; font-size: 20px; }
-        .t-cross { color: #ef4444; font-size: 20px; opacity: 0.3; }
-        
-        .col-basic { color: var(--color-basic); }
-        .col-pro { color: var(--color-pro); background: rgba(245, 158, 11, 0.05); }
-        .col-ulti { color: var(--color-ulti); background: rgba(168, 85, 247, 0.05); border-left: 2px solid var(--color-ulti); border-right: 2px solid var(--color-ulti); font-weight: bold; }
-
-        /* Bleed Layout */
         .bleed-image-layout { display: grid; grid-template-columns: 0.8fr 2fr; padding: 0; gap: 0; height: 720px; }
         .bleed-content { padding: 50px; display: flex; flex-direction: column; justify-content: center; background: #1e293b; z-index: 2; box-shadow: 10px 0 30px rgba(0,0,0,0.5); }
         .bleed-image-container { width: 100%; height: 100%; background: #ffffff; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
         .bleed-image { width: 95%; height: 95%; object-fit: contain; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15)); }
 
-        /* --- CONTACT STYLES --- */
-        .contact-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255,255,255,0.05);
-            padding: 15px 25px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            border: 1px solid var(--border);
-            transition: border-color 0.3s;
-        }
+        .contact-box { background: var(--bg-body); padding: 50px; border-radius: 20px; border: 1px solid var(--accent); margin-top: 30px; width: 100%; max-width: 700px; }
+        .contact-row { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.05); padding: 15px 25px; border-radius: 12px; margin-bottom: 15px; border: 1px solid var(--border); transition: border-color 0.3s; }
         .contact-row:hover { border-color: var(--accent); }
-        
-        .contact-info { display: flex; align-items: center; gap: 15px; font-size: 22px; font-weight: bold; }
-        .contact-info i { color: var(--accent); width: 25px; text-align: center; }
-        
-        .contact-actions { display: flex; gap: 10px; }
-        .contact-actions button, .contact-actions a {
-            background: var(--bg-body); border: 1px solid var(--border); color: var(--text-primary);
-            width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 18px; cursor: pointer; text-decoration: none; transition: all 0.2s;
-        }
-        .contact-actions button:hover, .contact-actions a:hover {
-            background: var(--accent); color: #fff; transform: translateY(-2px);
-        }
-
-        .footer-branding {
-            position: absolute; bottom: 30px; left: 40px;
-            display: flex; align-items: center; gap: 15px;
-            font-size: 16px; color: var(--text-secondary);
-        }
+        .contact-info { display: flex; align-items: center; gap: 15px; font-size: 22px; font-weight: bold; word-break: break-all; }
+        .contact-info i { color: var(--accent); width: 25px; text-align: center; flex-shrink: 0; }
+        .contact-actions { display: flex; gap: 10px; flex-shrink: 0; }
+        .contact-actions button, .contact-actions a { background: var(--bg-body); border: 1px solid var(--border); color: var(--text-primary); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; text-decoration: none; transition: all 0.2s; flex-shrink: 0; }
+        .contact-actions button:hover, .contact-actions a:hover { background: var(--accent); color: #fff; transform: translateY(-2px); }
+        .footer-branding { position: absolute; bottom: 30px; left: 40px; display: flex; align-items: center; gap: 15px; font-size: 16px; color: var(--text-secondary); }
         .footer-branding img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
 
-        /* Mobile specific styles for contact */
-        body.mobile-view .contact-row { flex-direction: column; gap: 15px; text-align: center; }
-        body.mobile-view .footer-branding { position: relative; bottom: auto; left: auto; margin-top: 30px; justify-content: center; }
+        .error-box { position: absolute; inset: 0; background: var(--bg-card); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #ef4444; border: 2px dashed #ef4444; padding: 20px; text-align: center; }
+
+        /* --- MODAL --- */
+        .modal { display: none; position: fixed; inset: 0; z-index: 10000; background: rgba(0,0,0,0.95); backdrop-filter: blur(8px); align-items: center; justify-content: center; }
+        .modal.active { display: flex; animation: fadeIn 0.3s; }
+        .modal-box { background: var(--bg-card); width: 90%; max-width: 1100px; height: 85%; border-radius: 24px; border: 1px solid var(--accent); display: flex; overflow: hidden; position: relative; box-shadow: 0 0 50px rgba(0,0,0,0.5); transition: all 0.3s; }
+        .modal-img { flex: 1.5; background: #000; display: flex; align-items: center; justify-content: center; }
+        .modal-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .modal-txt { flex: 1; padding: 50px; overflow-y: auto; }
+        .modal-desc h3 { color: var(--text-primary); font-size: 28px; margin-bottom: 25px; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+        .modal-desc li { position: relative; padding-right: 30px; margin-bottom: 20px; font-size: 22px; color: var(--text-secondary); line-height: 1.6; }
+        .modal-desc li::before { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; right: 0; top: 5px; color: var(--accent); font-size: 18px; }
+        .close-modal { position: absolute; top: 20px; left: 20px; font-size: 24px; cursor: pointer; color: #fff; z-index: 10; background: rgba(255,255,255,0.1); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
+        .close-modal:hover { background: #ef4444; }
+        .modal-box.basic-theme { border-color: var(--color-basic); } .modal-box.basic-theme h3, .modal-box.basic-theme li::before { color: var(--color-basic); }
+        .modal-box.pro-theme { border-color: var(--color-pro); } .modal-box.pro-theme h3, .modal-box.pro-theme li::before { color: var(--color-pro); }
+        .modal-box.ulti-theme { border-color: var(--color-ulti); } .modal-box.ulti-theme h3, .modal-box.ulti-theme li::before { color: var(--color-ulti); }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+        /* ================================================= */
+        /* === MOBILE SIMULATION & RESPONSIVENESS LOGIC === */
+        /* ================================================= */
+
+        body.mobile-view { padding-top: 40px; padding-bottom: 40px; justify-content: flex-start; background-color: #111; overflow-y: auto !important; }
+
+        body.mobile-view .slide-container {
+            width: 375px !important; max-width: 375px !important; height: auto !important; min-height: 812px;
+            border-radius: 40px !important; border: 10px solid #333 !important; padding: 30px 15px !important;
+            overflow: visible !important; display: block !important; box-shadow: 0 0 50px rgba(0,0,0,0.5); margin: 0 auto 30px auto;
+        }
+
+        /* SHARED MOBILE STYLES */
+        body.mobile-view h1, @media (max-width: 1024px) { h1 { font-size: 32px !important; text-align: center; } }
+        body.mobile-view h2, @media (max-width: 1024px) { h2 { font-size: 24px !important; text-align: center; width: 100%; border-right: none !important; border-bottom: 3px solid var(--accent); padding-bottom: 10px; padding-right: 0 !important; display: block; margin-bottom: 25px !important; } }
+        body.mobile-view p, @media (max-width: 1024px) { p { font-size: 16px !important; text-align: center; } }
+        
+        body.mobile-view .two-col, @media (max-width: 1024px) { .two-col { display: flex !important; flex-direction: column !important; height: auto !important; gap: 25px !important; } }
+        body.mobile-view .bleed-image-layout, @media (max-width: 1024px) { .bleed-image-layout { display: flex !important; flex-direction: column !important; height: auto !important; gap: 0 !important; } }
+        body.mobile-view .img-frame, body.mobile-view .bleed-image-container, @media (max-width: 1024px) { .img-frame, .bleed-image-container { height: 220px !important; max-height: 220px !important; width: 100% !important; } }
+        body.mobile-view .journey-grid, @media (max-width: 1024px) { .journey-grid { display: flex !important; flex-direction: column !important; height: auto !important; gap: 15px !important; } }
+        body.mobile-view .journey-card, @media (max-width: 1024px) { .journey-card { height: 180px !important; } }
+        body.mobile-view .pricing-grid, @media (max-width: 1024px) { .pricing-grid { display: flex !important; flex-direction: column !important; height: auto !important; gap: 20px !important; } }
+        body.mobile-view .p-card, @media (max-width: 1024px) { .p-card { height: auto !important; padding: 25px !important; width: 100% !important; flex: none !important; } }
+        body.mobile-view .contact-box, @media (max-width: 1024px) { .contact-box { min-width: 100% !important; width: 100% !important; padding: 20px !important; } }
+        body.mobile-view .contact-row, @media (max-width: 1024px) { .contact-row { flex-direction: column; gap: 10px; } }
+        body.mobile-view .contact-info, @media (max-width: 1024px) { font-size: 18px !important; word-break: normal !important; white-space: nowrap !important; justify-content: center; }
+        body.mobile-view .footer-branding, @media (max-width: 1024px) { .footer-branding { position: relative; bottom: auto; left: auto; margin-top: 30px; justify-content: center; } }
+        body.mobile-view .badge-container, @media (max-width: 1024px) { .badge-container { justify-content: center; margin-bottom: 10px; } }
+        body.mobile-view .mp-item, @media (max-width: 1024px) { padding: 12px 15px; flex-direction: column; gap: 10px; align-items: flex-start; }
+        body.mobile-view .mp-feat, @media (max-width: 1024px) { font-size: 16px; text-align: right; width: 100%; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; }
+        body.mobile-view .mp-val-container, @media (max-width: 1024px) { align-self: flex-end; }
+        body.mobile-view .modal-box, @media (max-width: 1024px) { .modal-box { flex-direction: column; height: 90%; width: 95%; } .modal-img { flex: none; height: 200px; display: block; } .modal-txt { flex: 1.5; padding: 20px; } }
+
+        @media (max-width: 1024px) { .slide-container { width: 100% !important; max-width: 100% !important; height: auto !important; padding: 20px !important; overflow: visible !important; box-shadow: none; border: none; } .controls { display: none; } body { padding: 15px; overflow-y: auto; } }
 
     </style>
     <script>
-        // Image Error Handler
         function fixImg(img) {
             if (img.dataset.retried) {
                 img.style.display = 'none';
@@ -465,78 +300,60 @@
             img.src = src.endsWith('.jpg') ? src.replace('.jpg','.png') : src.replace('.png','.jpg');
         }
 
-        // View & Theme Toggles
         function toggleView() {
             document.body.classList.toggle('mobile-view');
             let icon = document.getElementById('viewIcon');
             icon.className = document.body.classList.contains('mobile-view') ? 'fa-solid fa-desktop' : 'fa-solid fa-mobile-screen';
         }
+
         function toggleTheme() {
             document.body.classList.toggle('light-mode');
             let icon = document.getElementById('themeIcon');
             icon.className = document.body.classList.contains('light-mode') ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
         }
 
-        // Modal Logic (Generic)
         function closeModal() {
             document.getElementById('modal').classList.remove('active');
         }
 
-        // Open Image/Feature Modal
         function openFeatureModal(title, desc, imgSrc) {
             const modalBox = document.querySelector('.modal-box');
-            modalBox.className = 'modal-box'; // Reset classes
-            
+            modalBox.className = 'modal-box'; 
             document.getElementById('mTitle').innerText = title;
             document.getElementById('mDesc').innerHTML = desc;
-            
             const imgEl = document.getElementById('mImg');
             imgEl.style.display = 'block';
             imgEl.src = imgSrc;
-            document.querySelector('.modal-img').style.display = 'flex'; // Show image container
-            
+            document.querySelector('.modal-img').style.display = 'flex';
             document.getElementById('modal').classList.add('active');
         }
 
-        // Open Pricing Modal (Updated with Checks/Crosses)
         function openPlanModal(type) {
             const modalBox = document.querySelector('.modal-box');
-            modalBox.className = `modal-box ${type}-theme`; // Add theme class
+            modalBox.className = `modal-box ${type}-theme`;
             
-            const imgContainer = document.querySelector('.modal-img');
-            imgContainer.style.display = 'none'; // Hide image part for pricing
-            
-            // Make text container full width
-            const txtContainer = document.querySelector('.modal-txt');
-            txtContainer.style.flex = '1'; 
+            document.querySelector('.modal-img').style.display = 'none'; 
+            document.querySelector('.modal-txt').style.flex = '1'; 
 
             let title, content;
-            
             const checks = {
                 basic: {
-                    in: ['سجلات المرضى (EMR)', 'إدارة المواعيد وقوائم الانتظار', 'الروشتة الإلكترونية', 'تقارير يومية أساسية', 'مستخدم واحد (طبيب)'],
-                    out: ['نظام الحسابات (POS)', 'إدارة مخزون الصيدلية', 'بوت تليجرام الذكي', 'الحجز الأونلاين (Web)', 'تعدد المستخدمين', 'مساعد AI الذكي', 'دعم فني VIP']
+                    in: ['سجلات المرضى (EMR)', 'إدارة المواعيد وقوائم الانتظار', 'الروشتة الإلكترونية', 'تقارير يومية أساسية', '2 مستخدمين (طبيب + سكرتير)'],
+                    out: ['نظام الحسابات (POS)', 'إدارة مخزون الصيدلية', 'بوت تليجرام الذكي', 'الحجز الأونلاين (Web)', 'مساعد AI الذكي', 'دعم فني VIP']
                 },
                 pro: {
-                    in: ['كل مميزات Basic', 'نظام الحسابات (POS)', 'إدارة مخزون الصيدلية', 'بوت تليجرام الذكي', 'الحجز الأونلاين (Web)', 'تعدد المستخدمين (طبيب + سكرتارية)'],
+                    in: ['كل مميزات Basic', 'نظام الحسابات (POS)', 'إدارة مخزون الصيدلية', 'بوت تليجرام الذكي', 'الحجز الأونلاين (Web)', '3 مستخدمين (طبيب + 2 سكرتير)'],
                     out: ['مساعد AI الذكي', 'تحليلات نمو متقدمة', 'دعم فني VIP 24/7', 'تعدد الفروع']
                 },
                 ulti: {
-                    in: ['كل مميزات Professional', 'مساعد AI الذكي', 'تحليلات نمو متقدمة', 'دعم فني VIP 24/7', 'تعدد الفروع', 'سيرفر خاص وحماية قصوى'],
+                    in: ['كل مميزات Professional', 'مساعد AI الذكي', 'تحليلات نمو متقدمة', 'دعم فني VIP 24/7', 'تعدد الفروع', 'سيرفر خاص وحماية قصوى', 'عدد مستخدمين غير محدود'],
                     out: []
                 }
             };
 
-            if (type === 'basic') {
-                title = 'الباقة الأساسية (Basic)';
-                content = generateList(checks.basic);
-            } else if (type === 'pro') {
-                title = 'الباقة المحترفة (Professional)';
-                content = generateList(checks.pro);
-            } else if (type === 'ulti') {
-                title = 'الباقة الشاملة (Ultimate)';
-                content = generateList(checks.ulti);
-            }
+            if (type === 'basic') { title = 'الباقة الأساسية (Basic)'; content = generateList(checks.basic); } 
+            else if (type === 'pro') { title = 'الباقة المحترفة (Professional)'; content = generateList(checks.pro); } 
+            else if (type === 'ulti') { title = 'الباقة الشاملة (Ultimate)'; content = generateList(checks.ulti); }
 
             document.getElementById('mTitle').innerText = title;
             document.getElementById('mDesc').innerHTML = content;
@@ -545,42 +362,20 @@
 
         function generateList(data) {
             let html = '<ul style="font-size: 20px; list-style: none; padding: 0;">';
-            
-            // Included items
-            data.in.forEach(item => {
-                html += `<li style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px; color: var(--text-primary);"><i class="fa-solid fa-check" style="color: #22c55e;"></i> ${item}</li>`;
-            });
-
-            // Excluded items
+            data.in.forEach(item => { html += `<li style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px; color: var(--text-primary);"><i class="fa-solid fa-check" style="color: #22c55e;"></i> ${item}</li>`; });
             if (data.out.length > 0) {
                 html += '<hr style="border-color: var(--border); margin: 20px 0;">';
-                data.out.forEach(item => {
-                    html += `<li style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px; color: var(--text-secondary); opacity: 0.7;"><i class="fa-solid fa-xmark" style="color: #ef4444;"></i> ${item}</li>`;
-                });
+                data.out.forEach(item => { html += `<li style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px; color: var(--text-secondary); opacity: 0.7;"><i class="fa-solid fa-xmark" style="color: #ef4444;"></i> ${item}</li>`; });
             }
-            
             html += '</ul>';
             return html;
         }
 
-        // Copy to clipboard function
         function copyToClipboard(text) {
-            // Using modern API if available, else prompt
             if (navigator.clipboard) {
-                navigator.clipboard.writeText(text).then(() => {
-                    alert('تم نسخ الرقم: ' + text);
-                }).catch(err => {
-                    console.error('Could not copy text: ', err);
-                });
+                navigator.clipboard.writeText(text).then(() => { alert('تم نسخ الرقم: ' + text); }).catch(err => { console.error('Could not copy text: ', err); });
             } else {
-                // Fallback
-                const textArea = document.createElement("textarea");
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand("copy");
-                document.body.removeChild(textArea);
-                alert('تم نسخ الرقم: ' + text);
+                const textArea = document.createElement("textarea"); textArea.value = text; document.body.appendChild(textArea); textArea.select(); document.execCommand("copy"); document.body.removeChild(textArea); alert('تم نسخ الرقم: ' + text);
             }
         }
     </script>
@@ -745,40 +540,59 @@
 <!-- SLIDE 8: DETAILED COMPARISON TABLE -->
 <div class="slide-container">
     <h2>جدول مقارنة الباقات الشامل</h2>
-    <div class="pricing-table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>الميزة / الخاصية</th>
-                    <th class="col-basic">Basic</th>
-                    <th class="col-pro">Professional</th>
-                    <th class="col-ulti">Ultimate</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Core Features -->
-                <tr><td>سجلات المرضى (EMR)</td><td><i class="fa-solid fa-check t-check"></i></td><td><i class="fa-solid fa-check t-check"></i></td><td><i class="fa-solid fa-check t-check"></i></td></tr>
-                <tr><td>الروشتة الإلكترونية</td><td><i class="fa-solid fa-check t-check"></i></td><td><i class="fa-solid fa-check t-check"></i></td><td><i class="fa-solid fa-check t-check"></i></td></tr>
-                <tr><td>إدارة الحجوزات (Offline)</td><td><i class="fa-solid fa-check t-check"></i></td><td><i class="fa-solid fa-check t-check"></i></td><td><i class="fa-solid fa-check t-check"></i></td></tr>
-                
-                <!-- Financial & Admin -->
-                <tr><td>نظام الحسابات (POS)</td><td><i class="fa-solid fa-xmark t-cross"></i></td><td><i class="fa-solid fa-check t-check"></i></td><td><i class="fa-solid fa-check t-check"></i></td></tr>
-                <tr><td>إدارة المصروفات والإيرادات</td><td><i class="fa-solid fa-xmark t-cross"></i></td><td><i class="fa-solid fa-check t-check"></i></td><td><i class="fa-solid fa-check t-check"></i></td></tr>
-                <tr><td>إدارة مخزون الصيدلية</td><td><i class="fa-solid fa-xmark t-cross"></i></td><td><i class="fa-solid fa-check t-check"></i></td><td><i class="fa-solid fa-check t-check"></i></td></tr>
-                
-                <!-- Online & Smart Features -->
-                <tr><td>حجز أونلاين (Web)</td><td><i class="fa-solid fa-xmark t-cross"></i></td><td><i class="fa-solid fa-check t-check"></i></td><td><i class="fa-solid fa-check t-check"></i></td></tr>
-                <tr><td>بوت تليجرام الذكي</td><td><i class="fa-solid fa-xmark t-cross"></i></td><td><i class="fa-solid fa-check t-check"></i></td><td><i class="fa-solid fa-check t-check"></i></td></tr>
-                
-                <!-- Users & Support -->
-                <tr><td>تعدد المستخدمين</td><td><i class="fa-solid fa-xmark t-cross"></i> (طبيب فقط)</td><td><i class="fa-solid fa-check t-check"></i> (طبيب+مساعد)</td><td><i class="fa-solid fa-check t-check"></i> (غير محدود)</td></tr>
-                <tr><td>مساعد الذكاء الاصطناعي (AI)</td><td><i class="fa-solid fa-xmark t-cross"></i></td><td><i class="fa-solid fa-xmark t-cross"></i></td><td><i class="fa-solid fa-check t-check"></i></td></tr>
-                <tr><td>تعدد الفروع</td><td><i class="fa-solid fa-xmark t-cross"></i></td><td><i class="fa-solid fa-xmark t-cross"></i></td><td><i class="fa-solid fa-check t-check"></i></td></tr>
-                
-                <!-- Technical -->
-                <tr><td>الدعم الفني</td><td>أساسي (إيميل)</td><td>أولوية (واتساب)</td><td><strong>VIP (مكالمات 24/7)</strong></td></tr>
-            </tbody>
-        </table>
+    
+    <div class="smart-list-container">
+        <!-- Core -->
+        <div class="mp-item">
+            <div class="mp-feat">سجلات المرضى (EMR)</div>
+            <div class="mp-val-container"><div class="mp-badge basic">Basic+</div></div>
+        </div>
+        <div class="mp-item">
+            <div class="mp-feat">الروشتة الإلكترونية</div>
+            <div class="mp-val-container"><div class="mp-badge basic">Basic+</div></div>
+        </div>
+        <div class="mp-item">
+            <div class="mp-feat">إدارة الحجوزات</div>
+            <div class="mp-val-container"><div class="mp-badge basic">Basic+</div></div>
+        </div>
+
+        <!-- Financial -->
+        <div class="mp-item">
+            <div class="mp-feat">نظام الحسابات (POS)</div>
+            <div class="mp-val-container"><div class="mp-badge pro">Professional+</div></div>
+        </div>
+        <div class="mp-item">
+            <div class="mp-feat">إدارة مخزون الصيدلية</div>
+            <div class="mp-val-container"><div class="mp-badge pro">Professional+</div></div>
+        </div>
+
+        <!-- Online -->
+        <div class="mp-item">
+            <div class="mp-feat">الحجز الأونلاين (Web)</div>
+            <div class="mp-val-container"><div class="mp-badge pro">Professional+</div></div>
+        </div>
+        <div class="mp-item">
+            <div class="mp-feat">بوت تليجرام الذكي</div>
+            <div class="mp-val-container"><div class="mp-badge pro">Professional+</div></div>
+        </div>
+
+        <!-- Ultimate Features -->
+        <div class="mp-item">
+            <div class="mp-feat">مساعد الذكاء الاصطناعي</div>
+            <div class="mp-val-container"><div class="mp-badge ulti">Ultimate</div></div>
+        </div>
+        <div class="mp-item">
+            <div class="mp-feat">تعدد الفروع</div>
+            <div class="mp-val-container"><div class="mp-badge ulti">Ultimate</div></div>
+        </div>
+        <div class="mp-item">
+            <div class="mp-feat">عدد المستخدمين</div>
+            <div class="mp-val-container"><span class="mp-text-val">2 | 3 | ∞</span></div>
+        </div>
+        <div class="mp-item">
+            <div class="mp-feat">الدعم الفني</div>
+            <div class="mp-val-container" style="font-size: 14px; font-weight: bold; color: var(--text-secondary);">إيميل | واتساب | VIP</div>
+        </div>
     </div>
 </div>
 
@@ -786,7 +600,7 @@
 <div class="slide-container" style="text-align: center;">
     <h1 style="color: var(--accent);">جاهز للبدء؟</h1>
     
-    <div style="background: var(--bg-body); padding: 50px; border-radius: 20px; border: 1px solid var(--accent); margin-top: 30px; min-width: 600px;">
+    <div class="contact-box">
         
         <!-- Phone Section -->
         <div class="contact-row">
