@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sync 3 Clinic - الحل الطبي المتكامل</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            /* Premium Dark & Gold Theme */
+            --bg-body: #020617;
+            --bg-card: #0f172a;
+            --bg-lighter: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent: #3b82f6; 
+            --accent-green: #10b981;
+            --accent-gold: #f59e0b;
+            --border: rgba(255, 255, 255, 0.08);
+            --shadow-card: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
+            
+            /* Professional Plan Colors */
+            --color-lite: #0ea5e9; /* Sky Blue for Lite */
+            --color-pro: #f59e0b;  /* Amber Gold for Pro */
+            --color-ulti: #8b5cf6; /* Royal Purple for Ultimate */
+            
+            --grad-blue: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            --grad-surface: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+        }
+
+        body.light-mode {
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-lighter: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --accent-green: #059669;
+            --border: #e2e8f0;
+            --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-body);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
+            font-family: 'Tajawal', sans-serif;
+            margin: 0; padding: 0;
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .container { width: 90%; max-width: 1280px; margin: 0 auto; position: relative; z-index: 2; }
+        .section-padding { padding: 80px 0; border-bottom: 1px solid var(--border); }
+        .center-text { text-align: center; }
+
+        /* --- NAVIGATION --- */
+        .top-nav {
+            position: fixed; top: 0; width: 100%; height: 80px;
+            background: rgba(2, 6, 23, 0.9); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border); z-index: 1000;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; width: 90%; max-width: 1280px; }
+        .logo-area { display: flex; align-items: center; gap: 15px; text-decoration: none; color: inherit; }
+        .logo-area img { width: 48px; height: 48px; border-radius: 12px; box-shadow: 0 4px 12px rgba(59,130,246,0.3); }
+        .logo-text { font-weight: 800; font-size: 24px; letter-spacing: -0.5px; }
+        
+        .btn-theme { width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: var(--text-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .btn-theme:hover { background: var(--accent); color: white; border-color: var(--accent); }
+
+        /* --- HERO --- */
+        .hero { padding-top: 150px; padding-bottom: 80px; text-align: center; position: relative; overflow: hidden; }
+        .hero h1 { font-size: clamp(36px, 7vw, 64px); font-weight: 900; margin: 0 0 25px; line-height: 1.15; }
+        .hero p { font-size: 20px; color: var(--text-secondary); max-width: 800px; margin: 0 auto 45px; }
+        .hero-logo { width: 140px; height: 140px; border-radius: 35px; margin-bottom: 30px; border: 2px solid rgba(255,255,255,0.1); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+
+        /* --- WORKFLOW TABS --- */
+        .workflow-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: var(--shadow-card);
+            min-height: 650px;
+        }
+
+        @media (min-width: 1024px) {
+            .workflow-wrapper { flex-direction: row; padding: 30px; gap: 40px; }
+        }
+
+        .wf-nav {
+            flex: 0 0 280px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            overflow-y: auto;
+            border-left: 1px solid var(--border);
+            padding-left: 20px;
+        }
+        
+        @media (max-width: 1023px) {
+            .wf-nav { border-left: none; border-bottom: 1px solid var(--border); padding-left: 0; padding-bottom: 20px; flex-direction: row; overflow-x: auto; flex: none; }
+        }
+
+        .wf-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            padding: 15px 20px;
+            text-align: right;
+            cursor: pointer;
+            border-radius: 12px;
+            color: var(--text-secondary);
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            white-space: nowrap;
+        }
+
+        .wf-btn:hover { background: rgba(255,255,255,0.02); color: var(--text-primary); }
+        .wf-btn.active { background: rgba(59, 130, 246, 0.1); color: var(--accent); border-color: rgba(59, 130, 246, 0.2); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .wf-btn i { width: 20px; text-align: center; }
+
+        .wf-content { flex: 1; display: flex; flex-direction: column; animation: fadeIn 0.4s ease; }
+
+        .wf-image-container {
+            width: 100%;
+            height: auto;
+            min-height: 300px;
+            margin-bottom: 25px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px -10px rgba(0,0,0,0.5);
+            border: 1px solid var(--border);
+            background: #000;
+            position: relative;
+            cursor: pointer;
+        }
+        .wf-image-container::after {
+            content: '\f00e'; /* Search icon */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            font-size: 40px;
+            color: rgba(255,255,255,0.8);
+            transition: transform 0.3s;
+            pointer-events: none;
+        }
+        .wf-image-container:hover::after { transform: translate(-50%, -50%) scale(1); }
+        .wf-image-container:hover img { opacity: 0.6; filter: blur(2px); transform: scale(1.02); }
+
+        .wf-img { width: 100%; height: auto; display: block; transition: all 0.3s; }
+        
+        .wf-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
+        .wf-title { font-size: 28px; font-weight: 800; margin: 0; color: var(--text-primary); }
+        .wf-badge { background: var(--accent-green); color: #000; padding: 4px 12px; border-radius: 20px; font-weight: 800; font-size: 12px; }
+        
+        .wf-desc { font-size: 18px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px; }
+        .wf-features { display: flex; gap: 15px; flex-wrap: wrap; }
+        .wf-feat { background: rgba(255,255,255,0.05); padding: 8px 15px; border-radius: 8px; font-size: 14px; color: var(--text-primary); display: flex; align-items: center; gap: 8px; }
+        .wf-feat i { color: var(--accent); }
+
+        /* --- PRICING & COMPARISON --- */
+        .comparison-table { width: 100%; border-collapse: collapse; margin-top: 40px; background: var(--bg-card); border-radius: 20px; overflow: hidden; border: 1px solid var(--border); }
+        .comparison-table th, .comparison-table td { padding: 20px; text-align: center; border-bottom: 1px solid var(--border); font-size: 16px; }
+        .comparison-table th { background: rgba(255,255,255,0.02); font-weight: 800; font-size: 18px; }
+        .comparison-table td:first-child, .comparison-table th:first-child { text-align: right; padding-right: 30px; font-weight: 700; color: var(--text-primary); }
+        
+        .check-icon { color: var(--accent-green); font-size: 20px; }
+        .cross-icon { color: #ef4444; font-size: 20px; opacity: 0.3; }
+        .text-basic { color: var(--color-lite); }
+        .text-pro { color: var(--color-pro); }
+        .text-ulti { color: var(--color-ulti); }
+
+        .price-card { 
+            background: var(--bg-card); 
+            border-radius: 24px; 
+            padding: 30px; 
+            border: 1px solid var(--border); 
+            text-align: center; 
+            position: relative; 
+            transition: 0.3s; 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        /* Plan Specific Styling */
+        .price-card.basic-card { border-top: 4px solid var(--color-lite); }
+        .price-card.pro-card { border-top: 4px solid var(--color-pro); background: linear-gradient(180deg, rgba(245, 158, 11, 0.05) 0%, var(--bg-card) 100%); transform: scale(1.02); z-index: 1; border-color: var(--color-pro); }
+        .price-card.ulti-card { border-top: 4px solid var(--color-ulti); }
+
+        .price-card:hover { transform: translateY(-10px); }
+        .price-card.pro-card:hover { transform: scale(1.02) translateY(-10px); box-shadow: 0 20px 50px rgba(245, 158, 11, 0.15); }
+        .price-card.basic-card:hover { border-color: var(--color-lite); box-shadow: 0 10px 30px rgba(14, 165, 233, 0.15); }
+        .price-card.ulti-card:hover { border-color: var(--color-ulti); box-shadow: 0 10px 30px rgba(139, 92, 246, 0.15); }
+
+        .pop-tag { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--color-pro); color: #000; padding: 5px 20px; border-radius: 50px; font-weight: 800; font-size: 12px; box-shadow: 0 5px 15px rgba(245, 158, 11, 0.4); }
+        
+        .price-card h3 { font-size: 30px; margin-bottom: 5px; font-weight: 800; }
+        
+        .price-icon { font-size: 40px; margin-bottom: 20px; }
+        .price-features-list { text-align: right; margin: 20px 0; padding: 0; list-style: none; flex-grow: 1; }
+        .price-features-list li { margin-bottom: 12px; font-size: 15px; display: flex; align-items: flex-start; gap: 10px; color: var(--text-secondary); }
+        .price-features-list li i { margin-top: 4px; flex-shrink: 0; }
+        
+        .btn-select { 
+            margin-top: auto; 
+            padding: 15px; 
+            border-radius: 12px; 
+            border: none; 
+            font-weight: 800; 
+            cursor: pointer; 
+            width: 100%; 
+            font-size: 16px; 
+            transition: 0.3s; 
+            display: block; 
+            text-align: center; 
+            text-decoration: none; 
+        }
+        
+        /* Plan Buttons */
+        .btn-basic { background: transparent; border: 1px solid var(--color-lite); color: var(--color-lite); }
+        .btn-basic:hover { background: var(--color-lite); color: white; }
+        
+        .btn-pro { background: var(--color-pro); color: #000; border: 1px solid var(--color-pro); box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3); }
+        .btn-pro:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4); }
+        
+        .btn-ulti { background: transparent; border: 1px solid var(--color-ulti); color: var(--color-ulti); }
+        .btn-ulti:hover { background: var(--color-ulti); color: white; }
+
+        /* Icons Colors */
+        .icon-lite { color: var(--color-lite); background: rgba(14, 165, 233, 0.1); width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+        .icon-pro { color: var(--color-pro); background: rgba(245, 158, 11, 0.1); width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+        .icon-ulti { color: var(--color-ulti); background: rgba(139, 92, 246, 0.1); width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+
+        /* --- FOOTER --- */
+        footer { background: #050b14; padding: 80px 0; border-top: 1px solid var(--border); text-align: center; margin-top: 100px; }
+        .contact-pill { display: inline-flex; align-items: center; gap: 10px; padding: 14px 30px; background: var(--accent); color: white; border-radius: 50px; text-decoration: none; font-weight: 800; font-size: 16px; margin: 10px; }
+
+        /* --- DETAIL MODAL --- */
+        .modal { display: none; position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); align-items: center; justify-content: center; padding: 20px; }
+        .modal.active { display: flex; animation: fadeIn 0.3s ease; }
+        .modal-content { background: var(--bg-card); width: 100%; max-width: 1100px; border-radius: 24px; border: 1px solid var(--border); overflow: hidden; display: flex; flex-direction: column; max-height: 90vh; }
+        
+        /* Modal Responsive Layout */
+        @media (min-width: 1024px) {
+            .modal-content { flex-direction: row; }
+            .modal-img-col { width: 65%; background: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+            .modal-info-col { width: 35%; padding: 40px; overflow-y: auto; border-right: 1px solid var(--border); display: flex; flex-direction: column; }
+        }
+        @media (max-width: 1023px) {
+            .modal-img-col { width: 100%; height: 300px; background: #000; display: flex; align-items: center; justify-content: center; }
+            .modal-info-col { width: 100%; padding: 25px; overflow-y: auto; }
+        }
+
+        .modal img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .close-modal-btn { position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.1); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-size: 20px; color: white; transition: 0.2s; }
+        .close-modal-btn:hover { background: #ef4444; }
+
+        .modal-title { font-size: 28px; font-weight: 800; color: var(--accent); margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--border); }
+        .modal-desc { font-size: 18px; line-height: 1.8; color: var(--text-secondary); }
+        .modal-feat-list { margin-top: 20px; list-style: none; padding: 0; }
+        .modal-feat-list li { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--text-primary); }
+        .modal-feat-list li i { color: var(--accent-green); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+        @media (max-width: 768px) {
+            .wf-content { text-align: center; }
+            .wf-header { flex-direction: column; gap: 10px; }
+            .wf-features { justify-content: center; }
+            .comparison-table th, .comparison-table td { padding: 10px 5px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="top-nav">
+    <div class="nav-content">
+        <a href="#" class="logo-area">
+            <img src="logo.jpeg" alt="Sync 3 Clinic" onerror="fixImg(this)">
+            <span class="logo-text">Sync 3 <span style="color:var(--accent);">Clinic</span></span>
+        </a>
+        <button class="btn-theme" onclick="toggleTheme()"><i id="themeIcon" class="fa-solid fa-moon"></i></button>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="container">
+        <img src="logo.jpeg" class="hero-logo" alt="Logo" onerror="fixImg(this)">
+        <h1>الدليل الشامل للنظام<br><span style="background: var(--grad-blue); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">خطوة بخطوة نحو الاحترافية</span></h1>
+        <p>استكشف دورة العمل الكاملة داخل عيادتك، وتعرف على الفروقات الدقيقة بين الباقات لتختار الأنسب لك.</p>
+    </div>
+</section>
+
+<!-- SECTION 1: WORKFLOW HUB -->
+<div class="container section-padding" style="padding-top: 0;">
+    <div class="center-text" style="margin-bottom: 40px;">
+        <h2 style="font-size: 32px; font-weight: 800;">1. دورة العمل (Workflow)</h2>
+        <p style="color:var(--text-secondary);">تنقل بين الخطوات لترى كيف يخدمك النظام في كل مرحلة - اضغط على الصورة للتفاصيل</p>
+    </div>
+
+    <div class="workflow-wrapper">
+        <!-- Navigation Side -->
+        <div class="wf-nav">
+            <button class="wf-btn active" onclick="setStep(0)">
+                <i class="fa-solid fa-rocket"></i> نقطة البداية (Launchpad)
+            </button>
+            <button class="wf-btn" onclick="setStep(1)">
+                <i class="fa-solid fa-globe"></i> 1. حجز المريض (Web)
+            </button>
+            <button class="wf-btn" onclick="setStep(2)">
+                <i class="fa-solid fa-users"></i> 2. تنظيم الاستقبال (Queue)
+            </button>
+            <button class="wf-btn" onclick="setStep(3)">
+                <i class="fa-solid fa-tv"></i> 3. شاشة الانتظار (Display)
+            </button>
+            <button class="wf-btn" onclick="setStep(4)">
+                <i class="fa-solid fa-user-clock"></i> 4. كونسول الطبيب
+            </button>
+            <button class="wf-btn" onclick="setStep(5)">
+                <i class="fa-solid fa-id-card"></i> 5. ملف المريض (EMR)
+            </button>
+            <button class="wf-btn" onclick="setStep(6)">
+                <i class="fa-solid fa-stethoscope"></i> 6. الكشف (Doctor Desk)
+            </button>
+            <button class="wf-btn" onclick="setStep(7)">
+                <i class="fa-solid fa-print"></i> 7. الروشتة (Prescription)
+            </button>
+            <button class="wf-btn" onclick="setStep(8)">
+                <i class="fa-solid fa-file-invoice-dollar"></i> 8. الدفع والملخص
+            </button>
+            <button class="wf-btn" onclick="setStep(9)">
+                <i class="fa-solid fa-chart-line"></i> 9. تقارير الإدارة
+            </button>
+        </div>
+
+        <!-- Content Side -->
+        <div class="wf-content">
+            <div class="wf-image-container" onclick="openCurrentDetail()">
+                <img id="stepImg" src="Doctor's Launchpad.png" class="wf-img" onerror="fixImg(this)">
+            </div>
+            <div class="wf-info">
+                <div class="wf-header">
+                    <h3 id="stepTitle">نقطة الانطلاق (Launchpad)</h3>
+                    <span id="stepBadge" class="wf-badge">البداية</span>
+                </div>
+                <p id="stepDesc">واجهة مركزية تجمع كل أدوات النظام. بلمسة واحدة تنتقل إلى مكتبك، غرفة الانتظار، أو تقارير الدخل، مما يوفر عليك عناء البحث في القوائم.</p>
+                <div class="wf-features" id="stepFeats">
+                    <div class="wf-feat"><i class="fa-solid fa-bolt"></i> وصول سريع</div>
+                    <div class="wf-feat"><i class="fa-solid fa-layer-group"></i> واجهة موحدة</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 2: PACKAGES & COMPARISON -->
+<section id="pricing" class="section-padding" style="background: rgba(0,0,0,0.2);">
+    <div class="container">
+        <div class="center-text" style="margin-bottom: 50px;">
+            <h2 style="font-size: 32px; font-weight: 800;">2. الباقات والفروقات (Packages)</h2>
+            <p style="color:var(--text-secondary);">اختر الحل الأمثل بناءً على حجم عيادتك</p>
+        </div>
+
+        <!-- CARDS -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 60px;">
+            
+            <!-- LITE PLAN -->
+            <div class="price-card basic-card" onclick="openPlanModal('basic')">
+                <div class="icon-lite"><i class="fa-solid fa-user-doctor"></i></div>
+                <h3 class="text-basic">Lite</h3>
+                <p style="color:var(--text-secondary); font-size:14px; margin-bottom: 20px;">للعيادات الناشئة</p>
+                
+                <ul class="price-features-list">
+                    <li><i class="fa-solid fa-folder-open text-basic"></i> إدارة ملفات المرضى والتاريخ المرضي</li>
+                    <li><i class="fa-solid fa-calendar-check text-basic"></i> جدول مواعيد وحجز</li>
+                    <li><i class="fa-solid fa-file-invoice text-basic"></i> حسابات بسيطة (إيراد/مصروف)</li>
+                    <li><i class="fa-solid fa-headset text-basic"></i> دعم فني: تذاكر (رد 48 ساعة)</li>
+                    <li style="opacity:0.5; text-decoration: line-through;"><i class="fa-solid fa-xmark" style="color:#ef4444"></i> بوت تليجرام والمخزون</li>
+                </ul>
+
+                <a href="https://wa.me/201026250990?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%D8%8C%20%D8%A3%D9%88%D8%AF%20%D8%AA%D8%AC%D8%B1%D8%A8%D8%A9%20%D9%86%D8%B8%D8%A7%D9%85%20Sync%203%20Clinic%20(%D8%A8%D8%A7%D9%82%D8%A9%20Lite).%20%D9%87%D9%84%20%D9%8A%D9%85%D9%83%D9%86%D9%83%D9%85%20%D8%AA%D8%B2%D9%88%D9%8A%D8%AF%D9%8A%20%D8%A8%D9%85%D8%B2%D9%8A%D8%AF%20%D9%85%D9%86%20%D8%A7%D9%84%D9%85%D8%B9%D9%84%D9%88%D9%85%D8%A7%D8%AA%20%D8%AD%D9%88%D9%84%20%D8%A7%D9%84%D8%B4%D8%B1%D8%A7%D8%A1%D8%9F" class="btn-select btn-basic" target="_blank" onclick="event.stopPropagation()">ابدأ الآن</a>
+            </div>
+
+            <!-- PRO PLAN -->
+            <div class="price-card featured pro-card" onclick="openPlanModal('pro')">
+                <div class="pop-tag">الخيار الأفضل</div>
+                <div class="icon-pro"><i class="fa-solid fa-rocket"></i></div>
+                <h3 class="text-pro">Pro</h3>
+                <p style="color:var(--text-secondary); font-size:14px; margin-bottom: 20px;">للعيادات النشطة والمتطورة</p>
+                
+                <ul class="price-features-list">
+                    <li><i class="fa-solid fa-check text-pro"></i> <strong>كل مميزات الـ Lite</strong></li>
+                    <li><i class="fa-solid fa-globe text-pro"></i> الحجز أونلاين (Web Booking)</li>
+                    <li><i class="fa-solid fa-tv text-pro"></i> نظام شاشة الانتظار (Queue)</li>
+                    <li><i class="fa-solid fa-boxes-stacked text-pro"></i> إدارة المخزون (Inventory)</li>
+                    <li><i class="fa-solid fa-chart-line text-pro"></i> تقارير متقدمة وتحليل أداء</li>
+                    <li><i class="fa-solid fa-comments text-pro"></i> دعم فني: شات مباشر (أولوية)</li>
+                    <li style="opacity:0.5; text-decoration: line-through;"><i class="fa-solid fa-xmark" style="color:#ef4444"></i> بوت تليجرام الذكي</li>
+                </ul>
+
+                <a href="https://wa.me/201026250990?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%AA%D8%AC%D8%B1%D8%A8%D8%A9%20%D8%A7%D9%84%D9%86%D8%B3%D8%AE%D8%A9%20%D8%A7%D9%84%D9%83%D8%A7%D9%85%D9%84%D8%A9%20Sync%203%20Clinic%20(%D8%A8%D8%A7%D9%82%D8%A9%20Pro).%20%D8%A3%D9%88%D8%AF%20%D9%85%D8%B9%D8%B1%D9%81%D8%A9%20%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84%20%D9%88%D8%A7%D9%84%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1." class="btn-select btn-pro" target="_blank" onclick="event.stopPropagation()">جرب النسخة الكاملة</a>
+            </div>
+
+            <!-- ULTIMATE PLAN -->
+            <div class="price-card ulti-card" onclick="openPlanModal('ulti')">
+                <div class="icon-ulti"><i class="fa-solid fa-crown"></i></div>
+                <h3 class="text-ulti">Ultimate</h3>
+                <p style="color:var(--text-secondary); font-size:14px; margin-bottom: 20px;">للمراكز الطبية والسلاسل</p>
+                
+                <ul class="price-features-list">
+                    <li><i class="fa-solid fa-check text-ulti"></i> <strong>كل مميزات الـ Pro</strong></li>
+                    <li><i class="fa-solid fa-robot text-ulti"></i> المساعد الذكي (Telegram Bot)</li>
+                    <li><i class="fa-solid fa-sitemap text-ulti"></i> تعدد الفروع (Multi-Branch)</li>
+                    <li><i class="fa-solid fa-paintbrush text-ulti"></i> واجهة مخصصة (White Label)</li>
+                    <li><i class="fa-solid fa-user-tie text-ulti"></i> مدير حساب خاص ورقم طوارئ</li>
+                </ul>
+
+                <a href="https://wa.me/201026250990?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%D8%8C%20%D8%A3%D9%87%D8%AA%D9%85%20%D8%A8%D8%AD%D9%84%D9%88%D9%84%20%D8%A7%D9%84%D9%85%D8%B1%D8%A7%D9%83%D8%B2%20%D8%A7%D9%84%D8%B7%D8%A8%D9%8A%D8%A9%20Sync%203%20Clinic%20(%D8%A8%D8%A7%D9%82%D8%A9%20Ultimate).%20%D8%A3%D8%B1%D8%AC%D9%88%20%D8%A7%D9%84%D8%AA%D9%88%D8%A7%D8%B5%D9%84%20%D9%85%D8%B9%D9%8A%20%D9%84%D8%AA%D8%B1%D8%AA%D9%8A%D8%A8%20%D8%B9%D8%B1%D8%B6%20%D8%AA%D9%88%D8%B6%D9%8A%D8%AD%D9%8A." class="btn-select btn-ulti" target="_blank" onclick="event.stopPropagation()">تواصل للمراكز</a>
+            </div>
+        </div>
+
+        <!-- COMPARISON TABLE -->
+        <div style="overflow-x: auto;">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">الميزة / الخاصية</th>
+                        <th class="text-basic">Lite</th>
+                        <th class="text-pro">Pro</th>
+                        <th class="text-ulti">Ultimate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>سجلات المرضى (EMR)</td>
+                        <td><i class="fa-solid fa-check check-icon"></i></td>
+                        <td><i class="fa-solid fa-check check-icon"></i></td>
+                        <td><i class="fa-solid fa-check check-icon"></i></td>
+                    </tr>
+                    <tr>
+                        <td>الروشتة الإلكترونية</td>
+                        <td><i class="fa-solid fa-check check-icon"></i></td>
+                        <td><i class="fa-solid fa-check check-icon"></i></td>
+                        <td><i class="fa-solid fa-check check-icon"></i></td>
+                    </tr>
+                    <tr>
+                        <td>الحجز أونلاين (Web Booking)</td>
+                        <td><i class="fa-solid fa-xmark cross-icon"></i></td>
+                        <td><i class="fa-solid fa-check check-icon"></i></td>
+                        <td><i class="fa-solid fa-check check-icon"></i></td>
+                    </tr>
+                    <tr>
+                        <td>شاشة الانتظار (Queue Display)</td>
+                        <td><i class="fa-solid fa-xmark cross-icon"></i></td>
+                        <td><i class="fa-solid fa-check check-icon"></i></td>
+                        <td><i class="fa-solid fa-check check-icon"></i></td>
+                    </tr>
+                    <tr>
+                        <td>إدارة المخزون (Inventory)</td>
+                        <td><i class="fa-solid fa-xmark cross-icon"></i></td>
+                        <td><i class="fa-solid fa-check check-icon"></i></td>
+                        <td><i class="fa-solid fa-check check-icon"></i></td>
+                    </tr>
+                    <tr>
+                        <td>بوت تليجرام (Telegram Bot)</td>
+                        <td><i class="fa-solid fa-xmark cross-icon"></i></td>
+                        <td><i class="fa-solid fa-xmark cross-icon"></i></td>
+                        <td><i class="fa-solid fa-check check-icon"></i></td>
+                    </tr>
+                    <tr>
+                        <td>تعدد الفروع (Multi-Branch)</td>
+                        <td><i class="fa-solid fa-xmark cross-icon"></i></td>
+                        <td><i class="fa-solid fa-xmark cross-icon"></i></td>
+                        <td><i class="fa-solid fa-check check-icon"></i></td>
+                    </tr>
+                    <tr>
+                        <td>الدعم الفني</td>
+                        <td>Email (48h)</td>
+                        <td class="text-pro">شات مباشر</td>
+                        <td class="text-ulti">Account Manager</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <h2 style="font-size: 28px; margin-bottom: 30px;">هل لديك استفسار آخر؟</h2>
+        <a href="https://wa.me/201026250990" target="_blank" class="contact-pill"><i class="fa-brands fa-whatsapp"></i> تواصل معنا الآن</a>
+        <p style="opacity: 0.5; margin-top: 30px;">Sync 3 Clinic &copy; 2026</p>
+    </div>
+</footer>
+
+<!-- IMAGE/DETAIL MODAL -->
+<div id="zoomModal" class="modal">
+    <div class="close-modal-btn" onclick="closeModal()">&times;</div>
+    <div class="modal-content">
+        <div class="modal-img-col">
+            <img id="modalImg" src="">
+        </div>
+        <div class="modal-info-col">
+            <div id="modalTitle" class="modal-title"></div>
+            <div id="modalDesc" class="modal-desc"></div>
+            <ul id="modalList" class="modal-feat-list"></ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    // DATA FOR WORKFLOW
+    const steps = [
+        {
+            title: "نقطة الانطلاق (Launchpad)",
+            badge: "الرئيسية",
+            desc: "واجهة مركزية تجمع كل أدوات النظام. بلمسة واحدة تنتقل إلى مكتبك، غرفة الانتظار، أو تقارير الدخل.",
+            fullDesc: "تعتبر هذه الشاشة هي مركز القيادة. تمنحك وصولاً سريعاً لكل الوظائف الحيوية دون الحاجة للتنقل في قوائم معقدة. يمكنك منها رؤية عدد المرضى المنتظرين، إجمالي الدخل اليومي، والوصول لقائمة الأدوية والخدمات بضغطة زر.",
+            feats: ["وصول سريع لكل الأقسام", "تصميم مريح للعين", "تنبيهات فورية"],
+            img: "Doctor's Launchpad.png"
+        },
+        {
+            title: "بوابة الحجز أونلاين (Web Portal)",
+            badge: "حصري لـ Pro/Ultimate",
+            desc: "رابط خاص بعيادتك يتيح للمرضى حجز المواعيد بأنفسهم. المواعيد تظهر فوراً في جدول العيادة لمنع التضارب.",
+            fullDesc: "صفحة ويب كاملة تحمل شعار عيادتك واسمك. يمكن للمريض الدخول عليها من أي مكان وحجز الموعد المناسب له بناءً على الساعات المتاحة فقط في جدولك. هذا يقلل من ضغط الهاتف على السكرتارية ويضمن دقة المواعيد.",
+            feats: ["حجز ذاتي 24/7", "تزامن لحظي مع السيستم", "لا يحتاج لتثبيت تطبيقات"],
+            img: "Online Booking Portal.png"
+        },
+        {
+            title: "إدارة الطابور (Reception)",
+            badge: "الاستقبال",
+            desc: "شاشة التحكم للسكرتارية. تعرض حالة كل مريض (انتظار، كشف، دفع) وتسمح بتوجيههم بضغطة زر.",
+            fullDesc: "نظام Kanban الرقمي المتطور. يسمح للسكرتارية بنقل المريض من مرحلة لأخرى (مثل من الانتظار إلى الكشف) بسلاسة. يوضح النظام وقت انتظار كل مريض ونوع الكشف (عادي/مستعجل) لترتيب الأولويات.",
+            feats: ["تنظيم دقيق للأدوار", "تمييز الحالات بالألوان", "حساب وقت الانتظار"],
+            img: "Doctor's Queue.png"
+        },
+        {
+            title: "شاشة الانتظار (Display)",
+            badge: "حصري لـ Pro/Ultimate",
+            desc: "شاشة خارجية تعرض الدور الحالي والنداء الآلي الصوتي للمريض، مما يضفي هدوءاً ونظاماً على العيادة.",
+            fullDesc: "اربط شاشة التلفاز في صالة الانتظار بالنظام لعرض اسم المريض الحالي والتالي. النظام يقوم بنطق اسم المريض ورقم الغرفة آلياً، مما يلغي الحاجة للمناداة اليدوية ويضفي طابعاً احترافياً وهادئاً على العيادة.",
+            feats: ["نداء صوتي آلي", "تصميم فخم يعكس الهوية", "تقليل توتر المرضى"],
+            img: "Queue Display Screen.png"
+        },
+        {
+            title: "كونسول الطبيب",
+            badge: "الطبيب",
+            desc: "تنبيه مرئي للطبيب بوجود مريض جاهز بالخارج (الشريط الأصفر). يسمح لك بالتحضير قبل دخول الحالة.",
+            fullDesc: "بمجرد أن تقوم السكرتارية بتحضير المريض، يظهر لك شريط تنبيه واضح في شاشتك. يمكنك من هنا فتح ملف المريض مسبقاً لمراجعة تاريخه المرضي قبل دخوله الغرفة، مما يوفر الوقت ويظهر اهتمامك بالمريض.",
+            feats: ["تنبيه انتظار مرئي", "تحكم كامل في الجلسة", "استعداد قبل الدخول"],
+            img: "Consultation Console.png"
+        },
+        {
+            title: "ملف المريض (EMR)",
+            badge: "السجلات",
+            desc: "كل التاريخ الطبي للمريض في صفحة واحدة: بيانات شخصية، أشعة سابقة، وأدوية مزمنة.",
+            fullDesc: "سجل طبي إلكتروني شامل (EMR). يحتفظ بكل تفاصيل المريض من زيارات سابقة، روشتات، تشخيصات، وصور أشعة وتحاليل. يمكنك البحث عن أي مريض برقم الهاتف أو الاسم في ثوانٍ معدودة.",
+            feats: ["أرشيف كامل للأشعة", "بحث سريع وذكي", "تاريخ مرضي مفصل"],
+            img: "Patient Profile.png"
+        },
+        {
+            title: "مكتب الطبيب (Desk)",
+            badge: "الكشف",
+            desc: "واجهة التشخيص وكتابة العلاج. قاعدة بيانات أدوية ضخمة وقوالب جاهزة لتسريع العمل.",
+            fullDesc: "صممت هذه الواجهة لتكون سريعة جداً. يمكنك كتابة الروشتة باستخدام البحث الذكي (أول حرفين من الدواء) أو استخدام القوالب الجاهزة (مثل 'علاج البرد') لملء الروشتة بالكامل بضغطة واحدة.",
+            feats: ["بحث ذكي عن الأدوية", "قوالب علاجية جاهزة", "كتابة سريعة جداً"],
+            img: "Doctor's Desk.png"
+        },
+        {
+            title: "الروشتة الإلكترونية",
+            badge: "الطباعة",
+            desc: "روشتة مطبوعة باحترافية تحمل شعارك، واضحة للصيدلي وتمنع الأخطاء. تدعم الباركود.",
+            fullDesc: "المخرج النهائي للزيارة. روشتة مطبوعة بشكل أنيق، تحتوي على شعار العيادة، بيانات المريض، والتعليمات بوضوح تام. تدعم الباركود لتسهيل الأرشفة أو الربط المستقبلي مع الصيدليات.",
+            feats: ["تنسيق آلي واحترافي", "منع أخطاء الصرف", "دعم الباركود"],
+            img: "Prescription.png"
+        },
+        {
+            title: "ملخص الزيارة والدفع",
+            badge: "الماليات",
+            desc: "بعد انتهاء الكشف، تظهر شاشة إتمام الزيارة (الخضراء) لتحصيل الرسوم وتسجيل طريقة الدفع.",
+            fullDesc: "تضمن لك هذه الشاشة عدم نسيان أي مستحقات. توضح إجمالي المبلغ المطلوب (كشف + خدمات)، وتسمح بتسجيل طريقة الدفع (كاش/فيزا/فودافون كاش) لإضافتها للخزينة المناسبة فوراً.",
+            feats: ["تأكيد إتمام الزيارة", "تسجيل مالي دقيق", "دعم طرق دفع متعددة"],
+            img: "Visit Summary.png"
+        },
+        {
+            title: "لوحة التحكم (Dashboard)",
+            badge: "الإدارة",
+            desc: "في نهاية اليوم، تابع إيراداتك وعدد المرضى وصافي الربح بضغطة زر واحدة.",
+            fullDesc: "تقرير شامل يعطيك نظرة عامة على أداء العيادة. تعرف على إجمالي الدخل، المصروفات التي تم تسجيلها، وصافي الربح النهائي. كما يمكنك معرفة عدد المرضى الجدد مقارنة بالمترددين.",
+            feats: ["تحليل مالي يومي", "مؤشرات أداء العيادة", "مراقبة المخزون"],
+            img: "Daily Dashboard.png"
+        }
+    ];
+
+    let currentStepIndex = 0;
+
+    function setStep(index) {
+        currentStepIndex = index;
+        document.querySelectorAll('.wf-btn').forEach((btn, i) => {
+            btn.classList.toggle('active', i === index);
+        });
+
+        const s = steps[index];
+        const imgEl = document.getElementById('stepImg');
+        const contentDiv = document.querySelector('.wf-content');
+        
+        contentDiv.style.opacity = '0.5';
+        
+        setTimeout(() => {
+            document.getElementById('stepTitle').innerText = s.title;
+            document.getElementById('stepBadge').innerText = s.badge;
+            document.getElementById('stepDesc').innerText = s.desc;
+            imgEl.src = s.img;
+            
+            const featsContainer = document.getElementById('stepFeats');
+            featsContainer.innerHTML = '';
+            s.feats.forEach(f => {
+                featsContainer.innerHTML += `<div class="wf-feat"><i class="fa-solid fa-check"></i> ${f}</div>`;
+            });
+            
+            contentDiv.style.opacity = '1';
+        }, 200);
+    }
+
+    function openCurrentDetail() {
+        const s = steps[currentStepIndex];
+        openDetailModal(s.title, s.fullDesc, s.feats, s.img);
+    }
+
+    function openDetailModal(title, desc, feats, img) {
+        document.getElementById('modalTitle').innerText = title;
+        document.getElementById('modalDesc').innerText = desc;
+        document.getElementById('modalImg').src = img;
+        
+        const list = document.getElementById('modalList');
+        list.innerHTML = '';
+        if(feats && feats.length > 0) {
+            feats.forEach(f => {
+                list.innerHTML += `<li><i class="fa-solid fa-star"></i> ${f}</li>`;
+            });
+        }
+
+        document.getElementById('zoomModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() { 
+        document.getElementById('zoomModal').classList.remove('active'); 
+        document.body.style.overflow = 'auto'; 
+    }
+
+    function fixImg(img) {
+        if (img.dataset.retried) { img.style.display = 'none'; return; }
+        img.dataset.retried = true;
+        let c = img.src;
+        if (c.endsWith('.jpg')) img.src = c.replace('.jpg', '.png');
+        else if (c.endsWith('.png')) img.src = c.replace('.png', '.jpeg');
+        else if (c.endsWith('.jpeg')) img.src = c.replace('.jpeg', '.jpg');
+    }
+
+    function toggleTheme() {
+        document.body.classList.toggle('light-mode');
+        document.getElementById('themeIcon').className = document.body.classList.contains('light-mode') ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    }
+    
+    // Animation Observer
+    const obs = new IntersectionObserver((es) => { es.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+    document.querySelectorAll('.feature-block').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
